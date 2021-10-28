@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: farm-intro-frontend
+  labels:
+    app: farm-intro-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: farm-intro-frontend
+
+  template:
+    metadata:
+      labels:
+        app: farm-intro-frontend
+    spec:
+      containers:
+      - name: farm-intro-frontend
+        command:
+        - npm
+        - start
+        image: quay.io/mongodb/farm-intro-frontend:0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
