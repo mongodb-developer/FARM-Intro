@@ -1,2 +1,5 @@
 # FARM-Intro
-Introducing FARM - FastAPI, React &amp; MongoDB
+
+> **This repository has been archived.**
+> 
+> A [more complete FARM stack introduction](https://github.com/mongodb-developer/farm-stack-to-do-app) is available.
