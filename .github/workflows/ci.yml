@@ -9,6 +9,20 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:latest
+        options: >-
+          --health-cmd mongosh
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: mongodb
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -98,3 +112,11 @@ jobs:
             echo "No runtime smoke test file found"
             exit 1
           fi
+
+      - name: Install integration test dependencies
+        run: pip install pytest pymongo
+
+      - name: Run integration tests
+        env:
+          MONGODB_URI: mongodb://admin:mongodb@localhost:27017/
+        run: pytest tests/test_integration.py -v
