@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Repo smoke checks
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Validating repository structure and basic runnable signals"
+
+          has_signal=0
+
+          if find . -maxdepth 4 -type f -name "package.json" | grep -q .; then
+            has_signal=1
+            while IFS= read -r pkg; do
+              [ -z "$pkg" ] && continue
+              node -e "const fs=require('fs'); JSON.parse(fs.readFileSync(process.argv[1],'utf8'));" "$pkg"
+            done < <(find . -maxdepth 4 -type f -name "package.json")
+          fi
+
+          if find . -maxdepth 4 -type f \( -name "pyproject.toml" -o -name "requirements.txt" -o -name "setup.py" -o -name "manage.py" \) | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f \( -name "app.py" -o -name "main.py" -o -name "wsgi.py" -o -name "asgi.py" \) | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f \( -name "pom.xml" -o -name "build.gradle" -o -name "build.gradle.kts" -o -name "gradlew" \) | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f -name "go.mod" | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f -name "Cargo.toml" | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f \( -name "*.csproj" -o -name "*.sln" \) | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f \( -name "Dockerfile" -o -name "docker-compose.yml" -o -name "docker-compose.yaml" \) | grep -q .; then
+            has_signal=1
+          fi
+
+          if find . -maxdepth 4 -type f -name "Makefile" | grep -q .; then
+            has_signal=1
+          fi
+
+          if [ "$has_signal" -ne 1 ]; then
+            echo "No runnable/build signals found in repository"
+            exit 1
+          fi
+
+          echo "Running Python syntax smoke check"
+          python_files="$(find . -type f -name '*.py' -not -path './.git/*' 2>/dev/null || true)"
+          if [ -n "$python_files" ]; then
+            while IFS= read -r f; do
+              [ -z "$f" ] && continue
+              python -m py_compile "$f"
+            done <<< "$python_files"
+          fi
+
+          echo "Smoke checks passed"
