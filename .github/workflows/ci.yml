@@ -92,8 +92,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -f tests/run_runtime_smoke.py ]; then
-            python tests/run_runtime_smoke.py
+          if [ -f tests/test_runtime.py ]; then
+            python tests/test_runtime.py
           else
             echo "No runtime smoke test file found"
             exit 1
