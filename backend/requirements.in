@@ -3,7 +3,7 @@ fastapi
 pydantic
 
 # Database
-motor[srv]
+pymongo[srv]
 
 # Development
 pip-tools
