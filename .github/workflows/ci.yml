@@ -87,3 +87,14 @@ jobs:
           fi
 
           echo "Smoke checks passed"
+
+      - name: Run repository runtime smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f tests/run_runtime_smoke.py ]; then
+            python tests/run_runtime_smoke.py
+          else
+            echo "No runtime smoke test file found"
+            exit 1
+          fi
