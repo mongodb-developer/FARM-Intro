@@ -58,8 +58,6 @@ markupsafe==2.1.5
     # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
-motor[srv]==3.4.0
-    # via -r requirements.in
 mypy-extensions==1.0.0
     # via black
 orjson==3.10.3
@@ -82,8 +80,8 @@ pydantic-core==2.18.4
     # via pydantic
 pygments==2.18.0
     # via rich
-pymongo[srv]==4.7.3
-    # via motor
+pymongo[srv]==4.13.1
+    # via -r requirements.in
 pyproject-hooks==1.1.0
     # via
     #   build
