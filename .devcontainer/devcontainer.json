@@ -1,0 +1,29 @@
+{
+  "name": "FARM Stack To-Do App",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/FARM-Intro",
+  "forwardPorts": [8000, 3000, 27017],
+  "portsAttributes": {
+    "8000": { "label": "FastAPI backend", "onAutoForward": "notify" },
+    "3000": { "label": "React frontend", "onAutoForward": "openBrowser" },
+    "27017": { "label": "MongoDB", "onAutoForward": "silent" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mongodb.mongodb-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "remoteEnv": {
+    "DB_URL": "mongodb://localhost:27017/",
+    "DB_NAME": "farm_intro"
+  },
+  "postCreateCommand": "pip install -r backend/requirements.txt && cd frontend && npm install",
+  "postStartCommand": "echo 'Backend: DB_URL=mongodb://localhost:27017/ DB_NAME=farm_intro uvicorn main:app --reload (from backend/)'"
+}
