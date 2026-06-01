@@ -7,7 +7,7 @@ services:
       - mongodb-data:/data/db
       - mongodb-config:/data/configdb
     healthcheck:
-      test: mongosh --eval "db.adminCommand({ ping: 1 })"
+      test: ["CMD-SHELL", "mongosh --eval \"db.adminCommand({ ping: 1 })\""]
       interval: 10s
       timeout: 5s
       retries: 5
