@@ -13,7 +13,7 @@ jobs:
       mongodb:
         image: mongo:latest
         options: >-
-          --health-cmd mongosh
+          --health-cmd "mongosh --eval 'db.adminCommand({ ping: 1 })'"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -30,12 +30,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Repo smoke checks
         shell: bash
@@ -114,7 +114,7 @@ jobs:
           fi
 
       - name: Install integration test dependencies
-        run: pip install pytest pymongo
+        run: pip install pytest pymongo pydantic-settings
 
       - name: Run integration tests
         env:

@@ -66,6 +66,7 @@ class RuntimeTest(unittest.TestCase):
         cls.mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.mod)
 
+    def test_startup_and_router_mount(self):
         class FakeClient:
             def __init__(self, *args, **kwargs):
                 self.closed = False
@@ -74,15 +75,16 @@ class RuntimeTest(unittest.TestCase):
             def close(self):
                 self.closed = True
 
-        cls.mod.AsyncMongoClient = FakeClient
+        self.mod.AsyncMongoClient = FakeClient
 
-    def test_startup_and_router_mount(self):
-        asyncio.run(self.mod.startup_db_client())
-        self.assertTrue(hasattr(self.mod.app, "mongodb"))
-        paths = {route.path for route in self.mod.app.routes}
-        self.assertIn("/task/hello", paths)
-        asyncio.run(self.mod.shutdown_db_client())
-        self.assertTrue(self.mod.app.mongodb_client.closed)
+        async def run_lifespan():
+            async with self.mod.lifespan(self.mod.app):
+                self.assertTrue(hasattr(self.mod.app, "mongodb"))
+                paths = {route.path for route in self.mod.app.routes}
+                self.assertIn("/task/hello", paths)
+            self.assertTrue(self.mod.app.mongodb_client.closed)
+
+        asyncio.run(run_lifespan())
 
 
 if __name__ == "__main__":
