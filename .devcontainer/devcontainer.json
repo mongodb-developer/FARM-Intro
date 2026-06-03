@@ -29,6 +29,10 @@
     "DB_URL": "mongodb://localhost:27017/",
     "DB_NAME": "farm_intro"
   },
-  "postCreateCommand": "pip install -r backend/requirements.txt && cd frontend && npm install",
-  "postStartCommand": "echo 'Backend: DB_URL=mongodb://localhost:27017/ DB_NAME=farm_intro uvicorn main:app --reload (from backend/)'"
+  "postCreateCommand": "pip install -r backend/requirements.txt && cd frontend && npm ci",
+  "postStartCommand": "echo 'Services ready: MongoDB local on 27017. Backend and frontend start automatically after attach.'",
+  "postAttachCommand": {
+    "backend": "cd backend && DEBUG_MODE=true uvicorn main:app --host 0.0.0.0 --port 8000 --reload",
+    "frontend": "cd frontend && HOST=0.0.0.0 npm start"
+  }
 }
