@@ -6,6 +6,10 @@ A full-stack task manager built with **FastAPI**, **React**, and **MongoDB** —
 
 ---
 
+## Get Started with MongoDB Atlas
+
+This example connects to MongoDB Atlas, the fully managed cloud database. [Register for a free Atlas account](https://www.mongodb.com/cloud/atlas/register?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_term=learning_fuel&utm_content=farm.intro) to get a free cluster and follow along with this example.
+
 ## Features
 
 - Create, read, update, and delete to-do tasks
@@ -127,15 +131,15 @@ CI runs both test suites on every push using a `mongo:latest` service container 
 
 ## Why MongoDB?
 
-- [AsyncMongoClient](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/async/) — native async support for FastAPI/asyncio apps
-- [Flexible document model](https://www.mongodb.com/docs/manual/core/data-modeling-introduction/) — no migration needed as task fields evolve
-- [MongoDB Atlas](https://www.mongodb.com/atlas) — managed cloud option that requires only a `DB_URL` change
+- [AsyncMongoClient](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/async/?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_term=learning_fuel&utm_content=farm.intro) — native async support for FastAPI/asyncio apps
+- [Flexible document model](https://www.mongodb.com/docs/manual/core/data-modeling-introduction/?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_term=learning_fuel&utm_content=farm.intro) — no migration needed as task fields evolve
+- [MongoDB Atlas](https://www.mongodb.com/atlas?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_term=learning_fuel&utm_content=farm.intro) — managed cloud option that requires only a `DB_URL` change
 
 ## Additional Resources
 
-- Blog post: [FARM Stack Introduction](https://www.mongodb.com/developer/languages/python/farm-stack-fastapi-react-mongodb/)
+- Blog post: [FARM Stack Introduction](https://www.mongodb.com/developer/languages/python/farm-stack-fastapi-react-mongodb/?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_term=learning_fuel&utm_content=farm.intro)
 - [FastAPI docs](https://fastapi.tiangolo.com/)
-- [pymongo async docs](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/async/)
+- [pymongo async docs](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/async/?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_term=learning_fuel&utm_content=farm.intro)
 
 ## Troubleshooting
 
