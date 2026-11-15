@@ -67,7 +67,7 @@ DB_URL="mongodb://localhost:27017/" DB_NAME="farm_intro" uvicorn main:app --relo
 # 3. Frontend (new terminal)
 cd ../frontend
 npm install
-REACT_APP_BACKEND_URL=http://localhost:8000 npm start
+npm start
 # UI ready at http://localhost:3000
 ```
 
